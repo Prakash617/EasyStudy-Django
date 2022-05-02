@@ -1,16 +1,8 @@
-from pyexpat import model
 
 from django.db import models
 
 # Create your models here.
 SCHOOL_LEVEL = (
-<<<<<<< HEAD
-    ("Order Received", "Order Received"),
-    ("Order Processing", "Order Processing"),
-    ("On the way", "On the way"),
-    ("Order Completed", "Order Completed"),
-    ("Order Canceled", "Order Canceled"),
-=======
     ("one", "one"),
     ("two", "two"),
     ("Four", "Four"),
@@ -23,7 +15,6 @@ SCHOOL_LEVEL = (
     ("Eleven", "Eleven"),
     ("Twelve", "Twelve"),
   
->>>>>>> test
 )
 
 BACHELOR_LEVEL = (
@@ -42,13 +33,6 @@ MASTER_LEVEL = (
     ("Order Canceled", "Order Canceled"),
 )
 
-<<<<<<< HEAD
-class School(model.Model):
-    level = models.CharField(max_length=50, choices= SCHOOL_LEVEL)
-    
-    def __str__(self):
-        return self.level
-=======
 class School(models.Model):
     level = models.CharField(max_length=50, choices= SCHOOL_LEVEL)
     
@@ -78,34 +62,43 @@ class Semister(models.Model):
         return self.level
 class Subjects(models.Model):
     
-    School_subjects = models.ForeignKey(School, on_delete=models.SET_NULL, null=True, blank=True)
-    # Collage_subjects = models.CharField(max_length=100)
+    schoolLEVEL = models.ForeignKey(School, on_delete=models.SET_NULL, null=True, blank=True)
+    schoolSubjects = models.CharField(max_length=100)
     # Master_subjects = models.CharField(max_length=100)
     
     
     def __str__(self):
-        return self.School_subjects
+        return self.schoolSubjects
+    
+    
 class Syllabus(models.Model):
-    Syllabus = models.OneToOneField(Subjects,on_delete=models.SET_NULL, null=True, blank=True)
+    SyllabusSubjects = models.OneToOneField(Subjects,on_delete=models.SET_NULL, null=True, blank=True)
+    syllabus_Name = models.CharField( max_length=50)
+    syllabus_pic = models.ImageField(upload_to = 'syllabus_pic')
+
     
     def __str__(self):
-        return self.Syllabus
+        return self.syllabus
+    
 class Master(models.Model):
     level = models.CharField(max_length=50, choices= SCHOOL_LEVEL)
     
     def __str__(self):
         return self.level
 class QuestionBank(models.Model):
-    questionBank = models.OneToOneField(Subjects,on_delete=models.SET_NULL, null=True, blank=True)
-
+    Subjects = models.OneToOneField(Subjects,on_delete=models.SET_NULL, null=True, blank=True)
+    questionBank = models.CharField( max_length=50)
     
     def __str__(self):
         return self.questionBank
-class Notes(models.Model):
-    level = models.CharField(max_length=50, choices= SCHOOL_LEVEL)
+class Other_Notes(models.Model):
+    Subjects = models.ForeignKey(Subjects,on_delete=models.CASCADE, null=True, blank=True)
+    note_name = models.CharField(max_length=50)
+    note_urls = models.URLField(max_length=200)
     
     def __str__(self):
-        return self.level
+        return self.note_name
+    
 class Official_Note(models.Model):
     level = models.CharField(max_length=50, choices= SCHOOL_LEVEL)
     
@@ -161,10 +154,9 @@ class Comments(models.Model):
     
     def __str__(self):
         return self.level
-class Other_Notes(models.Model):
-    level = models.CharField(max_length=50, choices= SCHOOL_LEVEL)
+# class Other_Notes(models.Model):
+#     level = models.CharField(max_length=50, choices= SCHOOL_LEVEL)
     
-    def __str__(self):
-        return self.level
+#     def __str__(self):
+#         return self.level
     
->>>>>>> test
